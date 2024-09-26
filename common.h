@@ -25,6 +25,6 @@ std::string toHexString(const std::array<uint8_t, HASH_SIZE>& hashArray);
 void konstitucijosTestas(std::string zodziai);
 void manualHash();
 void readingFromFile(std::string filename);
-
+void checkForCollisions(const std::string &filename);
 
 #endif //BLOCKCHAINREPO_COMMON_H

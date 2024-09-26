@@ -49,4 +49,11 @@ Tuščias failas:
 
 ![img.png](img.png)
 
+### 6. Testas
+**Koliziju testas**
+
+Number of collisions: 743
+Total unique hashes: 99014
+Deja, gautas rezultatas nenudziugino, taciau galima pasitaisyti ir pabandyti dar karta. Kitas release bus su geresniu hashu generatoriumi
+
 

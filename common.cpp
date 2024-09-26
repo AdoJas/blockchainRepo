@@ -3,6 +3,7 @@
 //
 
 #include <array>
+#include <unordered_map>
 #include "common.h"
 
 void fileChoice() {
@@ -14,7 +15,7 @@ void fileChoice() {
         std::cin >> s;
         try {
             int choice = std::stoi(s);
-            if (choice == 1 || choice == 2 || choice == 3) {
+            if (choice == 1 || choice == 2 || choice == 3 || choice == 4) {
                 switch (choice) {
                     case 1:
                         manualHash();
@@ -27,6 +28,8 @@ void fileChoice() {
                     case 3:
                         konstitucijosTestas(manualInput);
                         return;
+                    case 4:
+                        checkForCollisions("random_pairs.txt");
                 }
             } else {
                 std::cout << "Neteisinga ivestis. Pasirinkite skaiciu nuo 1 iki 2.\n";
@@ -166,4 +169,37 @@ void readingFromFile(std::string filename){
 
     std::string finalHash = toHexString(hashArray);
     std::cout << "Final hash: " << finalHash << std::endl;
+}
+
+void checkForCollisions(const std::string &filename) {
+    std::ifstream infile(filename);
+    std::unordered_map<std::string, int> hashCounts;
+    int collisionCount = 0;
+    std::string line;
+
+    while (std::getline(infile, line)) {
+        size_t commaPos = line.find(',');
+        if (commaPos != std::string::npos) {
+            std::string str1 = line.substr(0, commaPos);
+            std::string str2 = line.substr(commaPos + 1);
+            std::string concatenated = str1 + str2;
+            std::array<uint8_t, HASH_SIZE> hashArray = {0};
+            unsigned int previousY = 1;
+
+            for (char c : concatenated) {
+                unsigned int decimalValue = static_cast<unsigned int>(c);
+                computeHashFunction(decimalValue, hashArray, previousY);
+            }
+
+            std::string hashValue = toHexString(hashArray);
+
+            hashCounts[hashValue]++;
+            if (hashCounts[hashValue] == 2) {
+                collisionCount++;
+            }
+        }
+    }
+
+    std::cout << "Number of collisions: " << collisionCount << std::endl;
+    std::cout << "Total unique hashes: " << hashCounts.size() << std::endl;
 }
