@@ -19,9 +19,12 @@
 const size_t HASH_SIZE = 32; // dydis baitais
 static unsigned int previousY = 1; // pradine reiksme
 
-int fileChoice();
+void fileChoice();
 void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArray, unsigned int& previousY);
 std::string toHexString(const std::array<uint8_t, HASH_SIZE>& hashArray);
 void konstitucijosTestas(std::string zodziai);
+void manualHash();
+void readingFromFile(std::string filename);
+
 
 #endif //BLOCKCHAINREPO_COMMON_H

@@ -5,35 +5,33 @@
 #include <array>
 #include "common.h"
 
-int fileChoice() {
+void fileChoice() {
     std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo, 3 - testai" << std::endl;
     std::string s;
     std::string manualInput;
-    do{
+
+    while (true) {
         std::cin >> s;
-       if(stoi(s) != 1 && stoi(s) != 2 && stoi(s) != 3){
-              std::cout << "Neteisinga ivestis. Pasirinkite skaiciu nuo 1 iki 2.\n";
-       }
-    }while(stoi(s) == 1 || stoi(s) != 2 || stoi(s) != 3);
-
-    switch(stoi(s)){
-        case 1:
-            std::cout << "Iveskite teksta: ";
-            std::cin >> manualInput;
-            break;
-        case 2:
-            std::cout << "Iveskite failo pavadinima: ";
-            std::cin >> manualInput;
-            break;
-        case 3:
-            std::cout<< "1- Du skirtingi simboliai\n";
-            std::cout<< "2- Du failai >1000 atsitiktiniu simboliu\n";
-            std::cout<< "3- Du failai >1000 atsitiktiniu simboliu, skiriasi vienu simb.\n";
-            std::cout<< "4- Tuscias failas\n";
-
-            break;
+        try {
+            int choice = std::stoi(s);
+            if (choice == 1 || choice == 2) {
+                switch (choice) {
+                    case 1:
+                        manualHash();
+                        return;
+                    case 2:
+                        std::cout << "Iveskite failo pavadinima: ";
+                        std::cin >> manualInput;
+                        readingFromFile(manualInput);
+                        return;
+                }
+            } else {
+                std::cout << "Neteisinga ivestis. Pasirinkite skaiciu nuo 1 iki 2.\n";
+            }
+        } catch (const std::invalid_argument&) {
+            std::cout << "Neteisinga ivestis. Pasirinkite skaiciu nuo 1 iki 2.\n";
+        }
     }
-    return stoi(s);
 }
 
 void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArray, unsigned int& previousY) {
@@ -68,42 +66,101 @@ std::string toHexString(const std::array<uint8_t, HASH_SIZE>& hashArray) {
 
 void konstitucijosTestas(std::string zodziai){
     std::ifstream fd1("konstitucija.txt");
+    if (!fd1.is_open()) {
+        std::cerr << "Could not open the file!" << std::endl;
+        return;
+    }
 
     int totalLinesRead = 0;
     int linesToRead = 1;
 
-    while (!fd1.eof()) {
-        std::array<uint8_t, HASH_SIZE> hashArray = {0}; // sukuriame nulinio dydzio arrayu, kuriame laikysime hash reiksmes
-        unsigned int previousY = 1; // pradine reiksme
+    while (true) {
+        std::array<uint8_t, HASH_SIZE> hashArray = {0};
+        unsigned int previousY = 1;
         long long totalHashTime = 0;
 
-        fd1.seekg(0); // Nustatome pointeri i failo pradzia
+        fd1.seekg(0);
         std::cout << "Reading " << linesToRead << " lines:" << std::endl;
 
+        int linesReadThisIteration = 0; // Count how many lines were read in this iteration
         for (int i = 0; i < linesToRead && std::getline(fd1, zodziai); ++i) {
+            ++linesReadThisIteration; // Count each line read
             ++totalLinesRead;
-            //std::cout << zodziai << std::endl;
+
             auto start = std::chrono::high_resolution_clock::now();
 
-            // Pereiname per kiekviena string simboli
+
             for (char c : zodziai) {
-                unsigned int decimalValue = static_cast<unsigned int>(c); // Gauname ASCII simbolio reiksme
-                // Komputuojame hash funkcija gautai dviajetainei vertei
+                unsigned int decimalValue = static_cast<unsigned int>(c);
+
                 computeHashFunction(decimalValue, hashArray, previousY);
             }
 
-            // Verciame hashArray i sesioliktaini stringa
             std::string finalHash = toHexString(hashArray);
 
             auto end = std::chrono::high_resolution_clock::now();
-
             auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
             totalHashTime += duration.count();
-            //std::cout << "Final computed hash (hex): " << finalHash <<  std::endl; // isvedame gauta hasha
 
-            previousY = 1; // Resetuojame previousY reiksme, kad naujai skaiciuojant hash funkcija butu pradeda nuo 1
+            previousY = 1;
         }
-        std::cout << "Total time taken for " << linesToRead << " lines: " << totalHashTime << " ms" << std::endl;
-        linesToRead *= 2;  // padvigubiname nuskaitomu eiluciu kieki
+
+        std::cout << "Total time taken for " << linesReadThisIteration << " lines: " << totalHashTime << " ns" << std::endl;
+
+
+        if (linesReadThisIteration == 0) {
+            break;
+        }
+        linesToRead *= 2;
     }
+}
+
+void manualHash(){
+    std::string zodziai;
+    std::cout << "Iveskite zodzius: ";
+    std::cin >> zodziai;
+    std::array<uint8_t, HASH_SIZE> hashArray = {0};
+    unsigned int previousY = 1;
+
+    for (char c : zodziai) {
+        unsigned int decimalValue = static_cast<unsigned int>(c);
+        computeHashFunction(decimalValue, hashArray, previousY);
+    }
+    std::string finalHash = toHexString(hashArray);
+    std::cout << "Hash: " << finalHash << std::endl;
+}
+
+void readingFromFile(std::string filename){
+    std::ifstream fd1(filename);
+    if (!fd1.is_open()) {
+        std::cerr << "Could not open the file!" << std::endl;
+        return;
+    }
+
+    std::string zodziai;
+    std::string allText;
+    while (std::getline(fd1, zodziai)) {
+        allText += zodziai + "\n";
+    }
+    fd1.close();
+
+    std::string defaultValue = "'m,ad/Kez**gqnI< sU 4esd;cx1GNwkF>}M,F_eJvTU)kw-yEt!:3}IC+e*J]YNC&L";
+    std::array<uint8_t, HASH_SIZE> hashArray = {0};
+    unsigned int previousY = 1;
+
+    if(allText.empty()){
+        for (char c : defaultValue) {
+            unsigned int decimalValue = static_cast<unsigned int>(c);
+            computeHashFunction(decimalValue, hashArray, previousY);
+        }
+    }else{
+        for (char c : allText) {
+            unsigned int decimalValue = static_cast<unsigned int>(c);
+            computeHashFunction(decimalValue, hashArray, previousY);
+        }
+    }
+
+
+    std::string finalHash = toHexString(hashArray);
+    std::cout << "Final hash: " << finalHash << std::endl;
 }

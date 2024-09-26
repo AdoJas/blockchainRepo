@@ -8,9 +8,9 @@ int main() {
     std::string zodziai; // Ivedimo string
     std::string hashOutput;
 
-    //fileChoice();
+    fileChoice();
 
-    konstitucijosTestas(zodziai);
+    //konstitucijosTestas(zodziai);
 
     return 0;
 }
