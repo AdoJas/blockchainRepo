@@ -75,6 +75,7 @@ void konstitucijosTestas(std::string zodziai){
     while (!fd1.eof()) {
         std::array<uint8_t, HASH_SIZE> hashArray = {0}; // sukuriame nulinio dydzio arrayu, kuriame laikysime hash reiksmes
         unsigned int previousY = 1; // pradine reiksme
+        long long totalHashTime = 0;
 
         fd1.seekg(0); // Nustatome pointeri i failo pradzia
         std::cout << "Reading " << linesToRead << " lines:" << std::endl;
@@ -95,12 +96,14 @@ void konstitucijosTestas(std::string zodziai){
             std::string finalHash = toHexString(hashArray);
 
             auto end = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
 
-            std::cout << "Final computed hash (hex): " << finalHash <<  " " << "Time taken: " << duration.count() << " ns" << std::endl; // isvedame gauta hasha
+            auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+            totalHashTime += duration.count();
+            //std::cout << "Final computed hash (hex): " << finalHash <<  std::endl; // isvedame gauta hasha
+
             previousY = 1; // Resetuojame previousY reiksme, kad naujai skaiciuojant hash funkcija butu pradeda nuo 1
         }
-
+        std::cout << "Total time taken for " << linesToRead << " lines: " << totalHashTime << " ms" << std::endl;
         linesToRead *= 2;  // padvigubiname nuskaitomu eiluciu kieki
     }
 }

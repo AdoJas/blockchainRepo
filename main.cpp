@@ -8,7 +8,7 @@ int main() {
     std::string zodziai; // Ivedimo string
     std::string hashOutput;
 
-    fileChoice();
+    //fileChoice();
 
     konstitucijosTestas(zodziai);
 
