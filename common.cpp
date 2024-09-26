@@ -82,13 +82,12 @@ void konstitucijosTestas(std::string zodziai){
         fd1.seekg(0);
         std::cout << "Reading " << linesToRead << " lines:" << std::endl;
 
-        int linesReadThisIteration = 0; // Count how many lines were read in this iteration
+        int linesReadThisIteration = 0;
         for (int i = 0; i < linesToRead && std::getline(fd1, zodziai); ++i) {
-            ++linesReadThisIteration; // Count each line read
+            ++linesReadThisIteration;
             ++totalLinesRead;
 
             auto start = std::chrono::high_resolution_clock::now();
-
 
             for (char c : zodziai) {
                 unsigned int decimalValue = static_cast<unsigned int>(c);
@@ -107,7 +106,6 @@ void konstitucijosTestas(std::string zodziai){
 
         std::cout << "Total time taken for " << linesReadThisIteration << " lines: " << totalHashTime << " ns" << std::endl;
 
-
         if (linesReadThisIteration == 0) {
             break;
         }
@@ -120,6 +118,7 @@ void manualHash(){
     std::cout << "Iveskite zodzius: ";
     std::cin >> zodziai;
     std::array<uint8_t, HASH_SIZE> hashArray = {0};
+
     unsigned int previousY = 1;
 
     for (char c : zodziai) {
@@ -139,6 +138,7 @@ void readingFromFile(std::string filename){
 
     std::string zodziai;
     std::string allText;
+
     while (std::getline(fd1, zodziai)) {
         allText += zodziai + "\n";
     }
@@ -146,6 +146,7 @@ void readingFromFile(std::string filename){
 
     std::string defaultValue = "'m,ad/Kez**gqnI< sU 4esd;cx1GNwkF>}M,F_eJvTU)kw-yEt!:3}IC+e*J]YNC&L";
     std::array<uint8_t, HASH_SIZE> hashArray = {0};
+
     unsigned int previousY = 1;
 
     if(allText.empty()){
@@ -159,7 +160,6 @@ void readingFromFile(std::string filename){
             computeHashFunction(decimalValue, hashArray, previousY);
         }
     }
-
 
     std::string finalHash = toHexString(hashArray);
     std::cout << "Final hash: " << finalHash << std::endl;
