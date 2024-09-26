@@ -5,14 +5,35 @@
 #include <array>
 #include "common.h"
 
-void fileChoice(std::string& s) {
-    std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo" << std::endl;
+int fileChoice() {
+    std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo, 3 - testai" << std::endl;
+    std::string s;
+    std::string manualInput;
     do{
         std::cin >> s;
-       if(stoi(s) != 1 && stoi(s) != 2) {
+       if(stoi(s) != 1 && stoi(s) != 2 && stoi(s) != 3){
               std::cout << "Neteisinga ivestis. Pasirinkite skaiciu nuo 1 iki 2.\n";
        }
-    }while(stoi(s) == 1 || stoi(s) != 2);
+    }while(stoi(s) == 1 || stoi(s) != 2 || stoi(s) != 3);
+
+    switch(stoi(s)){
+        case 1:
+            std::cout << "Iveskite teksta: ";
+            std::cin >> manualInput;
+            break;
+        case 2:
+            std::cout << "Iveskite failo pavadinima: ";
+            std::cin >> manualInput;
+            break;
+        case 3:
+            std::cout<< "1- Du skirtingi simboliai\n";
+            std::cout<< "2- Du failai >1000 atsitiktiniu simboliu\n";
+            std::cout<< "3- Du failai >1000 atsitiktiniu simboliu, skiriasi vienu simb.\n";
+            std::cout<< "4- Tuscias failas\n";
+
+            break;
+    }
+    return stoi(s);
 }
 
 void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArray, unsigned int& previousY) {
@@ -43,4 +64,43 @@ std::string toHexString(const std::array<uint8_t, HASH_SIZE>& hashArray) {
     }
 
     return oss.str();
+}
+
+void konstitucijosTestas(std::string zodziai){
+    std::ifstream fd1("konstitucija.txt");
+
+    int totalLinesRead = 0;
+    int linesToRead = 1;
+
+    while (!fd1.eof()) {
+        std::array<uint8_t, HASH_SIZE> hashArray = {0}; // sukuriame nulinio dydzio arrayu, kuriame laikysime hash reiksmes
+        unsigned int previousY = 1; // pradine reiksme
+
+        fd1.seekg(0); // Nustatome pointeri i failo pradzia
+        std::cout << "Reading " << linesToRead << " lines:" << std::endl;
+
+        for (int i = 0; i < linesToRead && std::getline(fd1, zodziai); ++i) {
+            ++totalLinesRead;
+            //std::cout << zodziai << std::endl;
+            auto start = std::chrono::high_resolution_clock::now();
+
+            // Pereiname per kiekviena string simboli
+            for (char c : zodziai) {
+                unsigned int decimalValue = static_cast<unsigned int>(c); // Gauname ASCII simbolio reiksme
+                // Komputuojame hash funkcija gautai dviajetainei vertei
+                computeHashFunction(decimalValue, hashArray, previousY);
+            }
+
+            // Verciame hashArray i sesioliktaini stringa
+            std::string finalHash = toHexString(hashArray);
+
+            auto end = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start);
+
+            std::cout << "Final computed hash (hex): " << finalHash <<  " " << "Time taken: " << duration.count() << " ns" << std::endl; // isvedame gauta hasha
+            previousY = 1; // Resetuojame previousY reiksme, kad naujai skaiciuojant hash funkcija butu pradeda nuo 1
+        }
+
+        linesToRead *= 2;  // padvigubiname nuskaitomu eiluciu kieki
+    }
 }
