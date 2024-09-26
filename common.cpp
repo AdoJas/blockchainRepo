@@ -6,7 +6,7 @@
 #include "common.h"
 
 void fileChoice() {
-    std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo, 3 - testai" << std::endl;
+    std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo, 3 - Konstitucija Testas" << std::endl;
     std::string s;
     std::string manualInput;
 
@@ -14,7 +14,7 @@ void fileChoice() {
         std::cin >> s;
         try {
             int choice = std::stoi(s);
-            if (choice == 1 || choice == 2) {
+            if (choice == 1 || choice == 2 || choice == 3) {
                 switch (choice) {
                     case 1:
                         manualHash();
@@ -23,6 +23,9 @@ void fileChoice() {
                         std::cout << "Iveskite failo pavadinima: ";
                         std::cin >> manualInput;
                         readingFromFile(manualInput);
+                        return;
+                    case 3:
+                        konstitucijosTestas(manualInput);
                         return;
                 }
             } else {
