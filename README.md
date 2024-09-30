@@ -47,7 +47,8 @@ Tuščias failas:
 | 512          | 13512100| 12010200| 13511300| 13511600| 13010900| 13111220  |
 | 789          | 21017900| 21518200| 21518400| 21017800| 21518400| 21318140  |
 
-![img.png](img.png)
+![image](https://github.com/user-attachments/assets/267ab672-859c-43e0-8e96-931cccad4dab)
+
 
 ### 6. Testas
 **Koliziju testas**
