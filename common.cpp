@@ -29,7 +29,7 @@ void fileChoice() {
                         konstitucijosTestas(manualInput);
                         return;
                     case 4:
-                        checkForCollisions("random_pairs.txt");
+                        checkForCollisions("testavimas6uzd.txt");
                 }
             } else {
                 std::cout << "Neteisinga ivestis. Pasirinkite skaiciu nuo 1 iki 2.\n";
@@ -41,22 +41,19 @@ void fileChoice() {
 }
 
 void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArray, unsigned int& previousY) {
-     // Pradedame su 1, kad isvengtume 0 reiksmes, kuri butu problematiska skaiciavimuose
+    // Pradedame su 1, kad isvengtume 0 reiksmes, kuri butu problematiska skaiciavimuose
     unsigned int p1 = 31; // pirminis skaicius maisymui
     unsigned int p2 = 17; // pirminis skaicius maisymui
     unsigned int p3 = 19; // pirminis skaicius maisymui
 
-    // Kompleksiskesnis skaiciavimas padidina reiksmes atsitiktinuma ir funkcijos jautruma
-    double y = (5 * x + 7 * x * x + 3 * pow(previousY, (x % p1)) +
-                sin(previousY) + cos(previousY / 2.0) * p2 +
-                (previousY ^ x) * p3 + (x * x * x % 23)); // papildoma maisa; funkcija ---- y =(5x + 7x^2 + 3^(previousY mod  x%31) + sin(previousY) + cos(previousY/2.0)*17 + (y xor x)*19 + (x^3 mod 23)) mod 256
 
-    previousY = static_cast<unsigned int>(std::abs(y)) % 256; // gauname absoliuciaja reikseme, kad butu teigiamas skaicius, kuris butu didesnis ir padarome ji tarp 0-255, kad butu manageable dydzio
-
-    // konvertuojame i bitus ir uzpildome hashArray'u
-    for (size_t i = 0; i < HASH_SIZE; ++i) {
-        hashArray[i] ^= (previousY + i) & 0xFF; // XOR operacija maisant su buvusia reiksme
-        previousY = (previousY * 31 + i) % 256; // liekanos operacija - uztikrina, kad gauta reiksme bus nuo 0 iki 255
+    for(int i = 0; i < HASH_SIZE; i++){
+        unsigned int uniqueInput = x ^ previousY;
+        uniqueInput = (uniqueInput << i);
+        unsigned int y = (5 * uniqueInput + 7 * uniqueInput * uniqueInput + 3 * (previousY * previousY) + (previousY ^ uniqueInput) * p3 + (uniqueInput * uniqueInput * uniqueInput % 23 ) * p2) ;
+        y = (y ^ (y << 13) ^ (y >> 7) & (y << previousY)); // XOR operacija su bitais
+        previousY = ((previousY * p1) ^ y + i) % 256;
+        hashArray[i] ^= y & 0xFF;// XOR operacija maisant su buvusia reiksme
     }
 }
 
@@ -97,7 +94,6 @@ void konstitucijosTestas(std::string zodziai){
 
             for (char c : zodziai) {
                 unsigned int decimalValue = static_cast<unsigned int>(c);
-
                 computeHashFunction(decimalValue, hashArray, previousY);
             }
 
@@ -119,20 +115,23 @@ void konstitucijosTestas(std::string zodziai){
     }
 }
 
-void manualHash(){
+void manualHash() {
     std::string zodziai;
     std::cout << "Iveskite zodzius: ";
-    std::cin >> zodziai;
-    std::array<uint8_t, HASH_SIZE> hashArray = {0};
+    std::cin.ignore();
+    std::getline(std::cin, zodziai);
 
+    std::array<uint8_t, HASH_SIZE> hashArray = {0};
     unsigned int previousY = 1;
 
     for (char c : zodziai) {
-        unsigned int decimalValue = static_cast<unsigned int>(c);
+        std::wcout << c;
+        unsigned int decimalValue = static_cast<unsigned int>(static_cast<unsigned char>(c));
         computeHashFunction(decimalValue, hashArray, previousY);
     }
+
     std::string finalHash = toHexString(hashArray);
-    std::cout << "Hash: " << finalHash << std::endl;
+    std::cout << "\nHash: " << finalHash << std::endl;
 }
 
 void readingFromFile(std::string filename){
@@ -173,16 +172,19 @@ void readingFromFile(std::string filename){
 
 void checkForCollisions(const std::string &filename) {
     std::ifstream infile(filename);
-    std::unordered_map<std::string, int> hashCounts;
+    std::unordered_map<std::string, std::pair<int, std::string>> hashCounts; // Stores the hash and corresponding string
     int collisionCount = 0;
     std::string line;
+    int lineNumber = 0;
 
     while (std::getline(infile, line)) {
+        lineNumber++;
         size_t commaPos = line.find(',');
         if (commaPos != std::string::npos) {
             std::string str1 = line.substr(0, commaPos);
             std::string str2 = line.substr(commaPos + 1);
             std::string concatenated = str1 + str2;
+
             std::array<uint8_t, HASH_SIZE> hashArray = {0};
             unsigned int previousY = 1;
 
@@ -193,9 +195,14 @@ void checkForCollisions(const std::string &filename) {
 
             std::string hashValue = toHexString(hashArray);
 
-            hashCounts[hashValue]++;
-            if (hashCounts[hashValue] == 2) {
+            if (hashCounts.find(hashValue) != hashCounts.end()) {
                 collisionCount++;
+                std::cout << "Collision detected!" << std::endl;
+                std::cout << "Hash Value: " << hashValue << std::endl;
+                std::cout << "Previous string (Line " << hashCounts[hashValue].first << "): " << hashCounts[hashValue].second << std::endl;
+                std::cout << "Current string (Line " << lineNumber << "): " << concatenated << std::endl;
+            } else {
+                hashCounts[hashValue] = {lineNumber, concatenated};
             }
         }
     }
@@ -203,3 +210,4 @@ void checkForCollisions(const std::string &filename) {
     std::cout << "Number of collisions: " << collisionCount << std::endl;
     std::cout << "Total unique hashes: " << hashCounts.size() << std::endl;
 }
+
