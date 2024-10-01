@@ -29,7 +29,7 @@ void fileChoice() {
                         konstitucijosTestas(manualInput);
                         return;
                     case 4:
-                        checkForCollisions("testavimas6uzd.txt");
+                        checkForCollisions("random_pairs.txt");
                 }
             } else {
                 std::cout << "Neteisinga ivestis. Pasirinkite skaiciu nuo 1 iki 2.\n";
@@ -39,23 +39,54 @@ void fileChoice() {
         }
     }
 }
-
+////Laikinas unkomentavimas kol testuojama nauja hashso funkcija
+//void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArray, unsigned int& previousY) {
+//    // Pradedame su 1, kad isvengtume 0 reiksmes, kuri butu problematiska skaiciavimuose
+//    unsigned int p1 = 31; // pirminis skaicius maisymui
+//    unsigned int p2 = 17; // pirminis skaicius maisymui
+//    unsigned int p3 = 19; // pirminis skaicius maisymui
+//
+//
+//    for(int i = 0; i < HASH_SIZE; i++){
+//        unsigned int uniqueInput = x ^ previousY;
+//        uniqueInput = (uniqueInput << i);
+//
+//        unsigned int y = (5 * uniqueInput + 7 * uniqueInput * uniqueInput + 3 * (previousY * previousY) + (previousY ^ uniqueInput) * p3 + (uniqueInput * uniqueInput * uniqueInput % 23 ) * p2);
+//
+//        y = (y ^ (y << 13) ^ (y >> 7) & (y << previousY)); // XOR operacija su bitais
+//
+//        previousY = ((previousY * p1) ^ y + i) % 256;
+//
+//        hashArray[i] ^= y & 0xFF;// XOR operacija maisant su buvusia reiksme
+//    }
+//}
 void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArray, unsigned int& previousY) {
-    // Pradedame su 1, kad isvengtume 0 reiksmes, kuri butu problematiska skaiciavimuose
-    unsigned int p1 = 31; // pirminis skaicius maisymui
-    unsigned int p2 = 17; // pirminis skaicius maisymui
-    unsigned int p3 = 19; // pirminis skaicius maisymui
+    unsigned int p1 = 2654435761; // Knuth's dauginimo konstanta
+    unsigned int p2 = 1597334677; // random prime
+    unsigned int p3 = 2246822519; // random prime
+    unsigned int p4 = 3266489917; // random prime
 
+    for (int i = 0; i < HASH_SIZE; i++) {
+        unsigned int uniqueInput = (x ^ previousY) + (i * p1);
 
-    for(int i = 0; i < HASH_SIZE; i++){
-        unsigned int uniqueInput = x ^ previousY;
-        uniqueInput = (uniqueInput << i);
-        unsigned int y = (5 * uniqueInput + 7 * uniqueInput * uniqueInput + 3 * (previousY * previousY) + (previousY ^ uniqueInput) * p3 + (uniqueInput * uniqueInput * uniqueInput % 23 ) * p2) ;
-        y = (y ^ (y << 13) ^ (y >> 7) & (y << previousY)); // XOR operacija su bitais
-        previousY = ((previousY * p1) ^ y + i) % 256;
-        hashArray[i] ^= y & 0xFF;// XOR operacija maisant su buvusia reiksme
+        uniqueInput = (uniqueInput << (i % 16)) | (uniqueInput >> (16 - (i % 16)));
+
+        unsigned int y = (13 * uniqueInput + 17 * (uniqueInput * uniqueInput)
+                          + 5 * (previousY * previousY)
+                          + ((previousY ^ uniqueInput) * p3)
+                          + ((uniqueInput * uniqueInput * uniqueInput) % 31) * p4);
+
+        y = (y ^ (y << 13)) ^ ((y >> 11) | (previousY << (i % 8)));
+
+        previousY = ((previousY * p1) ^ (y + i * p2) + (previousY << 5)) % 1048576;
+
+        hashArray[i] ^= (y & 0xFF);
+        hashArray[i] ^= ((y >> 8) & 0xFF);
+        hashArray[i] ^= ((y >> 16) & 0xFF);  // Didesne difuzina
+        hashArray[i] ^= ((y >> 24) & 0xFF);  // Mixinam tolesnius bitus
     }
 }
+
 
 std::string toHexString(const std::array<uint8_t, HASH_SIZE>& hashArray) {
     std::ostringstream oss;
@@ -120,7 +151,9 @@ void manualHash() {
     std::cout << "Iveskite zodzius: ";
     std::cin.ignore();
     std::getline(std::cin, zodziai);
-
+    if(zodziai.empty()){
+        zodziai = "'m,ad/Kez**gqnI< sU 4esd;cx1GNwkF>}M,F_eJvTU)kw-yEt!:3}IC+e*J]YNC&L";
+    }
     std::array<uint8_t, HASH_SIZE> hashArray = {0};
     unsigned int previousY = 1;
 
@@ -145,7 +178,7 @@ void readingFromFile(std::string filename){
     std::string allText;
 
     while (std::getline(fd1, zodziai)) {
-        allText += zodziai + "\n";
+        allText += zodziai;
     }
     fd1.close();
 
@@ -172,7 +205,7 @@ void readingFromFile(std::string filename){
 
 void checkForCollisions(const std::string &filename) {
     std::ifstream infile(filename);
-    std::unordered_map<std::string, std::pair<int, std::string>> hashCounts; // Stores the hash and corresponding string
+    std::unordered_map<std::string, std::pair<int, std::string>> hashCounts;
     int collisionCount = 0;
     std::string line;
     int lineNumber = 0;
