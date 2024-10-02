@@ -97,7 +97,9 @@ Tuščias failas:
 
 ### 5. Testas
 **Konstitucija**
+
 ![image](https://github.com/user-attachments/assets/ca4f24a1-10d4-428f-88eb-5eae40a88842)
+
 | Eiluciu sk | Laikas sec (vidutinis) |
 |------------|------------|
 | 1          | 0          |
@@ -111,6 +113,8 @@ Tuščias failas:
 | 256        | 0.0138871  |
 | 512        | 0.032028325|
 | 789        | 0.05133955 |
+
+
 
 
 ### 6. Testas
@@ -150,3 +154,9 @@ Pagal šiuos rezultatus ir rastą informaciją internete, galima pasakyti, kad �
 
 ## Išvados
 
+Atlikus tyrimą ir analizę, galima teigti, kad naujoji hash funkcija atitinka visus reikalavimus, kuriuos nurodėme pradžioje. Ji yra deterministinė, atspari kolizijai, efektyvi, atitinka sniego lavinos efektą ir turi fiksuoto dydžio rezultatą. Taip pat, ji yra atspari pakeitimams, nes net minimaliai pakeitus įvedimą, hash'as skiriasi iš esmės.
+Nors hashinimo funkcija atitinka visus reikalavimus, tačiau ji nėra tokia saugi, kaip pvz. SHA-256, nes jos saugumas yra tiesiogiai proporcingas jos sudėtingumui. Tačiau, ši funkcija yra gera alternatyva, jei reikia greito hashinimo, o saugumas nėra pagrindinis reikalavimas.
+Tai buvo puikus būdas prisiminti c++ kalbą ir atlikti įdomų tyrimą, kuris padėjo geriau suprasti hash funkcijas ir jų svarbą.
+
+Rezultatai nuo pirminio bandymo skiriasi tuo, kad nesukuria kolizijų (bent jau su naudotais duomenimis), taip pat, sniego lavinos efektas yra geresnis nei buvo tikėtasi.
+Komputavimo laikas taip pat pagerėjo
