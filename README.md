@@ -176,6 +176,6 @@ Atlikus tyrimą ir analizę, galima teigti, kad naujoji hash funkcija atitinka v
 Nors hashinimo funkcija atitinka visus reikalavimus, tačiau ji nėra tokia saugi, kaip pvz. SHA-256, nes jos saugumas yra tiesiogiai proporcingas jos sudėtingumui. Tačiau, ši funkcija yra gera alternatyva, jei reikia greito hashinimo, o saugumas nėra pagrindinis reikalavimas.
 Tai buvo puikus būdas prisiminti c++ kalbą ir atlikti įdomų tyrimą, kuris padėjo geriau suprasti hash funkcijas ir jų svarbą.
 
-Rezultatai nuo pirminio bandymo skiriasi tuo, kad nesukuria kolizijų (bent jau su naudotais duomenimis), taip pat, sniego lavinos efektas yra geresnis nei buvo tikėtasi.
+Rezultatai nuo pirminio bandymo skiriasi tuo, kad nesukuria kolizijų (bent jau su naudotais duomenimis), taip pat, sniego lavinos efektas yra geresnis nei buvo tikėtasi. Laikai pablogėjo, lyginant su sena versija, tačiau nebėrą kolizijų ir hash'o funkcija zymiai labiau miksuoja bitus nei anksčiau.
 
 
