@@ -82,6 +82,7 @@ std::string toHexString(const std::array<uint8_t, HASH_SIZE>& hashArray) {
 
 void konstitucijosTestas(std::string zodziai){
     std::ifstream fd1("konstitucija.txt");
+    std::ofstream fd2("konstitucija_hash.txt");
     if (!fd1.is_open()) {
         std::cerr << "Could not open the file!" << std::endl;
         return;

@@ -73,28 +73,22 @@ END FUNCTION
 Du failai sudaryti iš vieno, bet skirtingo simbolio:
 
 - **Failo 1**:`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`  
-  Hash:
-- `f235145993e3873b040305f3944290fdd846260eaccad91f75b033efa95667b5`
+  Hash: `f235145993e3873b040305f3944290fdd846260eaccad91f75b033efa95667b5`
 
 - **Failo 2**:`bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb`  
-  Hash:
-- `1fbcb7987f604fe537e67fd4b29d27ca6590ac7fd054e505f606a5b3726707b4`
+  Hash: `1fbcb7987f604fe537e67fd4b29d27ca6590ac7fd054e505f606a5b3726707b4`
 
 ### 2. Testas
 Du failai iš atsitiktinai sugeneruotų simbolių:
 
-- **Pirmojo failo hash**:
-- `feb7f36b9de99a9f8921a188481d6de5127c90595dfaed44835b03f652bf2ca7`
-- **Antrojo failo hash**:
-- `3125096c3a3e19ddf6c0c9fea922f4c7a4f5979a3e91592e7cae329c8d5f0738`
+- **Pirmojo failo hash**: `feb7f36b9de99a9f8921a188481d6de5127c90595dfaed44835b03f652bf2ca7`
+- **Antrojo failo hash**: `3125096c3a3e19ddf6c0c9fea922f4c7a4f5979a3e91592e7cae329c8d5f0738`
 
 ### 3. Testas
 Du vienodi failai, viename skiriasi vienas ženklas:
 
-- **Pirmojo failo hash**:
-- `feb7f36b9de99a9f8921a188481d6de5127c90595dfaed44835b03f652bf2ca7`
-- **Antrojo failo hash**:
-- `304884b96baaa8a89765d0f8f7585826b010d6ce8bf9e0d0ab2cb87d67f85be5`
+- **Pirmojo failo hash**: `feb7f36b9de99a9f8921a188481d6de5127c90595dfaed44835b03f652bf2ca7`
+- **Antrojo failo hash**: `304884b96baaa8a89765d0f8f7585826b010d6ce8bf9e0d0ab2cb87d67f85be5`
 
 ### 4. Testas
 Tuščias failas:
@@ -104,24 +98,23 @@ Tuščias failas:
 ### 5. Testas
 **Konstitucija**
 
-| Eiluciu sk. | Testas1 | Testas2 | Testas3 | Testas4 | Testas5 | Vidutinis |
-|--------------|---------|---------|---------|---------|---------|-----------|
-| 1            | 0       | 0       | 0       | 0       | 0       | 0         |
-| 2            | 0       | 0       | 0       | 0       | 0       | 0         |
-| 4            | 0       | 0       | 0       | 0       | 0       | 0         |
-| 8            | 500100  | 0       | 0       | 0       | 500700  | 200160    |
-| 16           | 501000  | 0       | 500200  | 500200  | 0       | 300280    |
-| 32           | 500400  | 499600  | 500700  | 500300  | 500400  | 500280    |
-| 64           | 1001100 | 1501300 | 1001100 | 1000900 | 1000300 | 1100940   |
-| 128          | 2502200 | 2501700 | 2501900 | 3002400 | 2501800 | 2602000   |
-| 256          | 6004700 | 6005200 | 6005100 | 6005000 | 6505600 | 6105120   |
-| 512          | 13512100| 12010200| 13511300| 13511600| 13010900| 13111220  |
-| 789          | 21017900| 21518200| 21518400| 21017800| 21518400| 21318140  |
-
-![image](https://github.com/user-attachments/assets/267ab672-859c-43e0-8e96-931cccad4dab)
-
-
 ### 6. Testas
+**Determiniškumas**
+
+- **Tas pats simbolių rinkinys turi generuoti tą patį hash'ą**
+##### Reikšmės generuotos po 5 kartus
+##### a reikšmė:
+    1c1f23659273dcea20712ce8ab856f66a3ed39f690b12af904160e5168469f4b
+#### lietuva reikšmė:
+    aa8b872bcb70bc61eb3d62c05f6548033aea14b79dcee88bf4c1dc3bc4e27856
+#### Lietuva reikšmė:
+    c59d6f43d129b337f2764cdf1a24ea52809d8bd753466682c2621598ee15ec02
+#### Lietuva! reikšmė:
+    9f9e328c3e564d180783dea7e975e2b7069c8206923443e9af3e02efc86e1b51
+#### lietuva! reikšmė:
+    a1e1e069b9d131bfad5390d609d8a9ec8dd8b2f3fae4b1dc51f5994ec0054506
+
+### 7. Testas
 **Koliziju testas**
 
 umber of collisions: 0
@@ -130,6 +123,7 @@ Rezultatas si karta nudziugino, koliziju neaptikta!! :)
 
 ### 7. Testas
 **Sniego lavinos testas**
+Testuota su 50 tūkstančių eilučių random string'u porų, kurios skiriasi vienu simboliu.
 
 | Metric            | Average     | Minimum     | Maximum     |
 |--------------------|-------------|-------------|-------------|
