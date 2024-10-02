@@ -18,7 +18,7 @@ void fileChoice() {
                     case 1:
                         manualHash();
                         continue;
-                    case 2:
+                    case 2:asdasd
                         std::cout << "Iveskite failo pavadinima: ";
                         std::cin >> manualInput;
                         readingFromFile(manualInput);
@@ -46,14 +46,13 @@ void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArr
     unsigned int p4 = 3266489917; // random prime
 
     for (int i = 0; i < HASH_SIZE; i++) {
-        unsigned int uniqueInput = (x ^ previousY) + (i * p1);
+        unsigned int uniqueInput = (x ^ previousY) + (i * p1); // XOR su ankstesniu rezultatu; naudojamas kaip unikalus ivesties kintamasis kartu su i * p1
 
-        uniqueInput = (uniqueInput << (i % 16)) | (uniqueInput >> (16 - (i % 16)));
-
+        uniqueInput = (uniqueInput << (i % 16)) | (uniqueInput >> (16 - (i % 16))); // (uniqueInput << (i % 16)) bitus paslenka (i % 16) poziciju i kairę, (uniqueInput >> (16 - (i % 16))) bitus paslenka (16 - (i % 16)) poziciju i desinę, ir rezultatas yra "sudedamas" OR operacijos
         unsigned int y = (13 * uniqueInput + 17 * (uniqueInput * uniqueInput)
                           + 5 * (previousY * previousY)
                           + ((previousY ^ uniqueInput) * p3)
-                          + ((uniqueInput * uniqueInput * uniqueInput) % 31) * p4);
+                          + ((uniqueInput * uniqueInput) % 31) * p4);
 
         y = (y ^ (y << 13)) ^ ((y >> 11) | (previousY << (i % 8)));
 
