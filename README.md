@@ -98,8 +98,6 @@ Tuščias failas:
 ### 5. Testas
 **Konstitucija**
 
-![image](https://github.com/user-attachments/assets/ca4f24a1-10d4-428f-88eb-5eae40a88842)
-
 | Eiluciu sk | Laikas sec (vidutinis) |
 |------------|------------|
 | 1          | 0          |
