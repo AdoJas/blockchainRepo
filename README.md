@@ -129,6 +129,9 @@ Tuščias failas:
 | 512          | 0.013111220  |
 | 789          | 0.021318140  |
 
+![image](https://github.com/user-attachments/assets/02edf253-a09b-4815-aaa0-8984e3ef0839)
+
+
 #### Matome, kad laikas suprastėjo, tačiau saugumas pagerėjo, o kolizijų nebėra. Manau, kad tai visai neblogas rezultatas.
 
 ### 6. Testas
