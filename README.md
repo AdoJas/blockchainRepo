@@ -97,6 +97,21 @@ Tuščias failas:
 
 ### 5. Testas
 **Konstitucija**
+![image](https://github.com/user-attachments/assets/ca4f24a1-10d4-428f-88eb-5eae40a88842)
+| Eiluciu sk | Laikas sec (vidutinis) |
+|------------|------------|
+| 1          | 0          |
+| 2          | 0          |
+| 4          | 0.000125025|
+| 8          | 0.000375275|
+| 16         | 0.000500575|
+| 32         | 0.001125825|
+| 64         | 0.002627475|
+| 128        | 0.006130575|
+| 256        | 0.0138871  |
+| 512        | 0.032028325|
+| 789        | 0.05133955 |
+
 
 ### 6. Testas
 **Determiniškumas**
@@ -132,4 +147,6 @@ Testuota su 50 tūkstančių eilučių random string'u porų, kurios skiriasi vi
 
 Pagal šiuos rezultatus ir rastą informaciją internete, galima pasakyti, kad ši hašavimo funkcija atitinka sniego lavinos reikalavimus, vidutinis bitu skirtumas apie 50%, o hex skirtumas 94%.
 Šie rezultatai nudžiugino, nes sniego lavinos testas yra vienas iš svarbiausių maišos funkcijų reikalavimų.
+
+## Išvados
 
