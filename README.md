@@ -114,8 +114,22 @@ Tuščias failas:
 | 512        | 0.032028325|
 | 789        | 0.05133955 |
 
+#### Seni rezultatai
+| Eiluciu sk. | Vidutinis |
+|--------------|-----------|
+| 1            | 0         |
+| 2            | 0         |
+| 4            | 0         |
+| 8            | 0.000200160    |
+| 16           | 0.000300280    |
+| 32           | 0.000500280    |
+| 64           | 0.001100940   |
+| 128          | 0.002602000   |
+| 256          | 0.006105120   |
+| 512          | 0.013111220  |
+| 789          | 0.021318140  |
 
-
+#### Matome, kad laikas suprastėjo, tačiau saugumas pagerėjo, o kolizijų nebėra. manyčiau, kad tai visai neblogas rezultatas.
 
 ### 6. Testas
 **Determiniškumas**
@@ -159,4 +173,5 @@ Nors hashinimo funkcija atitinka visus reikalavimus, tačiau ji nėra tokia saug
 Tai buvo puikus būdas prisiminti c++ kalbą ir atlikti įdomų tyrimą, kuris padėjo geriau suprasti hash funkcijas ir jų svarbą.
 
 Rezultatai nuo pirminio bandymo skiriasi tuo, kad nesukuria kolizijų (bent jau su naudotais duomenimis), taip pat, sniego lavinos efektas yra geresnis nei buvo tikėtasi.
-Komputavimo laikas taip pat pagerėjo
+
+
