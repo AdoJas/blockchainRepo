@@ -129,7 +129,7 @@ Tuščias failas:
 | 512          | 0.013111220  |
 | 789          | 0.021318140  |
 
-#### Matome, kad laikas suprastėjo, tačiau saugumas pagerėjo, o kolizijų nebėra. manyčiau, kad tai visai neblogas rezultatas.
+#### Matome, kad laikas suprastėjo, tačiau saugumas pagerėjo, o kolizijų nebėra. Manau, kad tai visai neblogas rezultatas.
 
 ### 6. Testas
 **Determiniškumas**
