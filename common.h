@@ -15,6 +15,8 @@
 #include <iomanip>
 #include <fstream>
 #include <chrono>
+#include <array>
+#include <unordered_map>
 
 const size_t HASH_SIZE = 32; // dydis baitais
 static unsigned int previousY = 1; // pradine reiksme

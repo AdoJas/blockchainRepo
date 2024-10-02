@@ -2,16 +2,14 @@
 // Created by adoma on 9/19/2024.
 //
 
-#include <array>
-#include <unordered_map>
+
 #include "common.h"
 
 void fileChoice() {
-    std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo, 3 - Konstitucija Testas" << std::endl;
-    std::string s;
-    std::string manualInput;
-
     while (true) {
+        std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo, 3 - Konstitucija Testas, 4 - koliziju patikra" << std::endl;
+        std::string s;
+        std::string manualInput;
         std::cin >> s;
         try {
             int choice = std::stoi(s);
@@ -19,17 +17,18 @@ void fileChoice() {
                 switch (choice) {
                     case 1:
                         manualHash();
-                        return;
+                        continue;
                     case 2:
                         std::cout << "Iveskite failo pavadinima: ";
                         std::cin >> manualInput;
                         readingFromFile(manualInput);
-                        return;
+                        continue;
                     case 3:
                         konstitucijosTestas(manualInput);
-                        return;
+                        continue;
                     case 4:
                         checkForCollisions("random_pairs.txt");
+                        continue;
                 }
             } else {
                 std::cout << "Neteisinga ivestis. Pasirinkite skaiciu nuo 1 iki 2.\n";
@@ -39,27 +38,7 @@ void fileChoice() {
         }
     }
 }
-////Laikinas unkomentavimas kol testuojama nauja hashso funkcija
-//void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArray, unsigned int& previousY) {
-//    // Pradedame su 1, kad isvengtume 0 reiksmes, kuri butu problematiska skaiciavimuose
-//    unsigned int p1 = 31; // pirminis skaicius maisymui
-//    unsigned int p2 = 17; // pirminis skaicius maisymui
-//    unsigned int p3 = 19; // pirminis skaicius maisymui
-//
-//
-//    for(int i = 0; i < HASH_SIZE; i++){
-//        unsigned int uniqueInput = x ^ previousY;
-//        uniqueInput = (uniqueInput << i);
-//
-//        unsigned int y = (5 * uniqueInput + 7 * uniqueInput * uniqueInput + 3 * (previousY * previousY) + (previousY ^ uniqueInput) * p3 + (uniqueInput * uniqueInput * uniqueInput % 23 ) * p2);
-//
-//        y = (y ^ (y << 13) ^ (y >> 7) & (y << previousY)); // XOR operacija su bitais
-//
-//        previousY = ((previousY * p1) ^ y + i) % 256;
-//
-//        hashArray[i] ^= y & 0xFF;// XOR operacija maisant su buvusia reiksme
-//    }
-//}
+
 void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArray, unsigned int& previousY) {
     unsigned int p1 = 2654435761; // Knuth's dauginimo konstanta
     unsigned int p2 = 1597334677; // random prime
@@ -151,15 +130,16 @@ void manualHash() {
     std::cout << "Iveskite zodzius: ";
     std::cin.ignore();
     std::getline(std::cin, zodziai);
-    if(zodziai.empty()){
+
+    if (zodziai.empty()) {
         zodziai = "'m,ad/Kez**gqnI< sU 4esd;cx1GNwkF>}M,F_eJvTU)kw-yEt!:3}IC+e*J]YNC&L";
     }
+
     std::array<uint8_t, HASH_SIZE> hashArray = {0};
     unsigned int previousY = 1;
 
-    for (char c : zodziai) {
-        std::wcout << c;
-        unsigned int decimalValue = static_cast<unsigned int>(static_cast<unsigned char>(c));
+    for (wchar_t wc : zodziai) {
+        unsigned int decimalValue = static_cast<unsigned int>(wc);
         computeHashFunction(decimalValue, hashArray, previousY);
     }
 
