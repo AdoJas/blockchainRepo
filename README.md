@@ -67,39 +67,39 @@ FUNCTION toHexString(hashArray)
 END FUNCTION
 ```
 
-## Testavimas
+## Dabartinio kodo testavimas
 
 ### 1. Testas
 Du failai sudaryti iš vieno, bet skirtingo simbolio:
 
 - **Failo 1**:`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`  
   Hash:
-- `2b2f9929dfbbf9590b075979a76bf959dbff89794f8b2969db67a949079b4949`
+- `f235145993e3873b040305f3944290fdd846260eaccad91f75b033efa95667b5`
 
 - **Failo 2**:`bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb`  
   Hash:
-- `41b11f8f31e17beb5191c7a77131cbdb81116f3f11a10b1b51b187a7f1111beb`
+- `1fbcb7987f604fe537e67fd4b29d27ca6590ac7fd054e505f606a5b3726707b4`
 
 ### 2. Testas
 Du failai iš atsitiktinai sugeneruotų simbolių:
 
 - **Pirmojo failo hash**:
-- `4e5b9136cc395fa4ba57cdb2c8e5db2026d309ae04d1777cb2ef654ae01df378`
+- `feb7f36b9de99a9f8921a188481d6de5127c90595dfaed44835b03f652bf2ca7`
 - **Antrojo failo hash**:
-- `eae735f220bddb58a613013e8c39a7a4e27f4d0a38353370be8b59564491bf7c`
+- `3125096c3a3e19ddf6c0c9fea922f4c7a4f5979a3e91592e7cae329c8d5f0738`
 
 ### 3. Testas
 Du vienodi failai, viename skiriasi vienas ženklas:
 
 - **Pirmojo failo hash**:
-- `4e5b9136cc395fa4ba57cdb2c8e5db2026d309ae04d1777cb2ef654ae01df378`
+- `feb7f36b9de99a9f8921a188481d6de5127c90595dfaed44835b03f652bf2ca7`
 - **Antrojo failo hash**:
-- `f346f671e1b4b4ef1f5292cded2030ab8b1e6ea9390c4c27d76aca05051828c3`
+- `304884b96baaa8a89765d0f8f7585826b010d6ce8bf9e0d0ab2cb87d67f85be5`
 
 ### 4. Testas
 Tuščias failas:
 
-- **Failo hash**: `644503e46283b90a40c1cf309e5f35c69c7d1b3c9a3b31c238f9876896176dbe`
+- **Failo hash**: `85b1c46dfd68cb2c3ff989a39326692e8219241692e101d0c198ab148b3bc595`
 
 ### 5. Testas
 **Konstitucija**
@@ -124,8 +124,8 @@ Tuščias failas:
 ### 6. Testas
 **Koliziju testas**
 
-Number of collisions: 743
-Total unique hashes: 99014
-Deja, gautas rezultatas nenudziugino, taciau galima pasitaisyti ir pabandyti dar karta. Kitas release bus su geresniu hashu generatoriumi
+umber of collisions: 0
+Total unique hashes: 100000
+Rezultatas si karta nudziugino, koliziju neaptikta!! :)
 
 

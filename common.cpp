@@ -7,7 +7,7 @@
 
 void fileChoice() {
     while (true) {
-        std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo, 3 - Konstitucija Testas, 4 - koliziju patikra" << std::endl;
+        std::cout << "Pasirinkite, kaip noretumete ivesti duomenis: 1 - Ranka, 2 - is failo, 3 - Konstitucija Testas, 4 - koliziju patikra, 5- bitu ir hex skirtumu skaiciavimas" << std::endl;
         std::string s;
         std::string manualInput;
         std::cin >> s;
@@ -18,7 +18,7 @@ void fileChoice() {
                     case 1:
                         manualHash();
                         continue;
-                    case 2:asdasd
+                    case 2:
                         std::cout << "Iveskite failo pavadinima: ";
                         std::cin >> manualInput;
                         readingFromFile(manualInput);
@@ -28,6 +28,9 @@ void fileChoice() {
                         continue;
                     case 4:
                         checkForCollisions("random_pairs.txt");
+                        continue;
+                    case 5:
+                        //analyzeHashDifferences();
                         continue;
                 }
             } else {
@@ -52,7 +55,7 @@ void computeHashFunction(unsigned int x, std::array<uint8_t, HASH_SIZE>& hashArr
         unsigned int y = (13 * uniqueInput + 17 * (uniqueInput * uniqueInput)
                           + 5 * (previousY * previousY)
                           + ((previousY ^ uniqueInput) * p3)
-                          + ((uniqueInput * uniqueInput) % 31) * p4);
+                          + ((uniqueInput * uniqueInput * uniqueInput) % 31) * p4);
 
         y = (y ^ (y << 13)) ^ ((y >> 11) | (previousY << (i % 8)));
 
