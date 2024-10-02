@@ -114,6 +114,9 @@ Tuščias failas:
 | 512        | 0.032028325|
 | 789        | 0.05133955 |
 
+![image](https://github.com/user-attachments/assets/f223c876-c5a1-4ca9-aee2-72ab41a9df2e)
+
+
 #### Seni rezultatai
 | Eiluciu sk. | Vidutinis |
 |--------------|-----------|
