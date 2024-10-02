@@ -16,4 +16,5 @@
 double calculateBitDifference(const std::array<uint8_t, HASH_SIZE>& hash1, const std::array<uint8_t, HASH_SIZE>& hash2);
 double calculateHexDifference(const std::string& hex1, const std::string& hex2);
 void analyzeHashDifferences(const std::vector<std::array<uint8_t, HASH_SIZE>>& hashValues);
+void testHashDifferencesFromFile(const std::string &filename);
 #endif //BLOCKCHAINREPO_DIFFERENCETESTING_H

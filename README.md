@@ -128,4 +128,14 @@ umber of collisions: 0
 Total unique hashes: 100000
 Rezultatas si karta nudziugino, koliziju neaptikta!! :)
 
+### 7. Testas
+**Sniego lavinos testas**
+
+| Metric            | Average     | Minimum     | Maximum     |
+|--------------------|-------------|-------------|-------------|
+| Bit Differences     | 49.9812%   | 37.1094%    | 62.5%       |
+| Hex Differences      | 93.7181%   | 78.125%     | 100%        |
+
+Pagal šiuos rezultatus ir rastą informaciją internete, galima pasakyti, kad ši hašavimo funkcija atitinka sniego lavinos reikalavimus, vidutinis bitu skirtumas apie 50%, o hex skirtumas 94%.
+Šie rezultatai nudžiugino, nes sniego lavinos testas yra vienas iš svarbiausių maišos funkcijų reikalavimų.
 

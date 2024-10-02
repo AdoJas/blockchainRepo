@@ -4,6 +4,7 @@
 
 
 #include "common.h"
+#include "differenceTesting.h"
 
 void fileChoice() {
     while (true) {
@@ -13,7 +14,7 @@ void fileChoice() {
         std::cin >> s;
         try {
             int choice = std::stoi(s);
-            if (choice == 1 || choice == 2 || choice == 3 || choice == 4) {
+            if (choice == 1 || choice == 2 || choice == 3 || choice == 4 || choice == 5) {
                 switch (choice) {
                     case 1:
                         manualHash();
@@ -30,7 +31,7 @@ void fileChoice() {
                         checkForCollisions("random_pairs.txt");
                         continue;
                     case 5:
-                        //analyzeHashDifferences();
+                        testHashDifferencesFromFile("testavimas6uzd.txt");
                         continue;
                 }
             } else {
